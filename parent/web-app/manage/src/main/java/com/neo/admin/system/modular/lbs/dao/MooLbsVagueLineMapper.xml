@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.lbs.dao.MooLbsVagueLineDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="MooLbsVagueLineMap">SELECT <include refid="columns"/> FROM moo_lbs_vague_line WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="MooLbsVagueLineMap">SELECT <include refid="columns"/> FROM moo_lbs_vague_line</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="MooLbsVagueLineMap">SELECT <include refid="columns"/> FROM moo_lbs_vague_line
+    	WHERE AP_MAC = #{apMac} AND DATE = #{date} ORDER BY SPOT_NUM DESC limit 4
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="MooLbsVagueLineMap">SELECT <include refid="columns"/> FROM moo_lbs_vague_line
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="apMac != null and apMac != ''">AND AP_MAC LIKE CONCAT('%',#{apMac},'%')</if>
+      <if test="lineName != null and lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{lineName},'%')</if>
+      <if test="isDetermine != null and isDetermine != ''">AND IS_DETERMINE LIKE CONCAT('%',#{isDetermine},'%')</if>
+      <if test="spotNum != null and spotNum != ''">AND SPOT_NUM LIKE CONCAT('%',#{spotNum},'%')</if>
+      <if test="date != null and date != ''">AND DATE LIKE CONCAT('%',#{date},'%')</if>
+    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsVagueLine">INSERT INTO moo_lbs_vague_line (<include refid="insert_columns"/>) VALUES (#{apMac},#{lineName},#{isDetermine},#{spotNum},#{date})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM moo_lbs_vague_line WHERE ID=#{id} </delete>
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsVagueLine">UPDATE moo_lbs_vague_line
+    <set>
+      <if test="apMac != null">AP_MAC = #{apMac}, </if>
+      <if test="lineName != null">LINE_NAME = #{lineName}, </if>
+      <if test="isDetermine != null">IS_DETERMINE = #{isDetermine}, </if>
+      <if test="spotNum != null">SPOT_NUM = #{spotNum}, </if>
+      <if test="date != null">DATE = #{date}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.lbs.domain.MooLbsVagueLine" id="MooLbsVagueLineMap">
+    <result column="ID" property="id"/>
+    <result column="AP_MAC" property="apMac"/>
+    <result column="LINE_NAME" property="lineName"/>
+    <result column="IS_DETERMINE" property="isDetermine"/>
+    <result column="SPOT_NUM" property="spotNum"/>
+    <result column="DATE" property="date"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="insert_columns">AP_MAC,LINE_NAME,IS_DETERMINE,SPOT_NUM,DATE</sql>
+  <sql id="columns">ID,AP_MAC,LINE_NAME,IS_DETERMINE,SPOT_NUM,DATE</sql>
+</mapper>

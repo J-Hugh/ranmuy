@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.lbs.dao.MooLbsLineDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="MooLbsLineMap">SELECT <include refid="columns"/> FROM moo_lbs_line WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="MooLbsLineMap">SELECT <include refid="columns"/> FROM moo_lbs_line</select>
+  
+  <!--插入记录-->
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsLine">INSERT INTO moo_lbs_line (<include refid="columns"/>) VALUES 
+  (#{id},#{line_id},#{name},#{line_name},#{front_name},#{front_spell},#{terminal_name},#{terminal_spell},#{company},#{length},#{time_desc},#{start_time},#{end_time},#{description},#{total_price},#{loop},#{auto},#{ic_card},#{double_deck},#{express_way},#{status},#{air},#{commutation_ticket})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM moo_lbs_line WHERE ID=#{id}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsLine">UPDATE moo_lbs_line
+    <set>
+      <if test="lineId != null">LINE_ID = #{lineId}, </if>
+      <if test="name != null">NAME = #{name}, </if>
+      <if test="lineName != null">LINE_NAME = #{lineName}, </if>
+      <if test="frontName != null">FRONT_NAME = #{frontName}, </if>
+      <if test="frontSpell != null">FRONT_SPELL = #{frontSpell}, </if>
+      <if test="terminalName != null">TERMINAL_NAME = #{terminalName}, </if>
+      <if test="terminalSpell != null">TERMINAL_SPELL = #{terminalSpell}, </if>
+      <if test="company != null">COMPANY = #{company}, </if>
+      <if test="length != null">LENGTH = #{length}, </if>
+      <if test="timeDesc != null">TIME_DESC = #{timeDesc}, </if>
+      <if test="startTime != null">START_TIME = #{startTime}, </if>
+      <if test="endTime != null">END_TIME = #{endTime}, </if>
+      <if test="description != null">DESCRIPTION = #{description}, </if>
+      <if test="totalPrice != null">TOTAL_PRICE = #{totalPrice}, </if>
+      <if test="loop != null">LOOP = #{loop}, </if>
+      <if test="auto != null">AUTO = #{auto}, </if>
+      <if test="icCard != null">IC_CARD = #{icCard}, </if>
+      <if test="doubleDeck != null">DOUBLE_DECK = #{doubleDeck}, </if>
+      <if test="expressWay != null">EXPRESS_WAY = #{expressWay}, </if>
+      <if test="status != null">STATUS = #{status}, </if>
+      <if test="air != null">AIR = #{air}, </if>
+      <if test="commutationTicket != null">COMMUTATION_TICKET = #{commutationTicket}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.lbs.domain.MooLbsLine" id="MooLbsLineMap">
+    <result column="ID" property="id"/>
+    <result column="LINE_ID" property="lineId"/>
+    <result column="NAME" property="name"/>
+    <result column="LINE_NAME" property="lineName"/>
+    <result column="FRONT_NAME" property="frontName"/>
+    <result column="FRONT_SPELL" property="frontSpell"/>
+    <result column="TERMINAL_NAME" property="terminalName"/>
+    <result column="TERMINAL_SPELL" property="terminalSpell"/>
+    <result column="COMPANY" property="company"/>
+    <result column="LENGTH" property="length"/>
+    <result column="TIME_DESC" property="timeDesc"/>
+    <result column="START_TIME" property="startTime"/>
+    <result column="END_TIME" property="endTime"/>
+    <result column="DESCRIPTION" property="description"/>
+    <result column="TOTAL_PRICE" property="totalPrice"/>
+    <result column="LOOP" property="loop"/>
+    <result column="AUTO" property="auto"/>
+    <result column="IC_CARD" property="icCard"/>
+    <result column="DOUBLE_DECK" property="doubleDeck"/>
+    <result column="EXPRESS_WAY" property="expressWay"/>
+    <result column="STATUS" property="status"/>
+    <result column="AIR" property="air"/>
+    <result column="COMMUTATION_TICKET" property="commutationTicket"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,LINE_ID,NAME,LINE_NAME,FRONT_NAME,FRONT_SPELL,TERMINAL_NAME,TERMINAL_SPELL,COMPANY,LENGTH,TIME_DESC,START_TIME,END_TIME,DESCRIPTION,TOTAL_PRICE,`LOOP`,AUTO,IC_CARD,DOUBLE_DECK,EXPRESS_WAY,STATUS,AIR,COMMUTATION_TICKET</sql>
+</mapper>

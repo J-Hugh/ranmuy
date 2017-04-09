@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.lbs.dao.MooLbsDayDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="MooLbsDayMap">SELECT <include refid="columns"/> FROM moo_lbs_day WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="MooLbsDayMap">SELECT <include refid="columns"/> FROM moo_lbs_day</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="MooLbsDayMap">SELECT <include refid="columns"/> FROM moo_lbs_day
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="mac != null and mac != ''">AND MAC LIKE CONCAT('%',#{mac},'%')</if>
+      <if test="lineName != null and lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{lineName},'%')</if>
+      <if test="statrTime != null and statrTime != ''">AND STATR_TIME LIKE CONCAT('%',#{statrTime},'%')</if>
+      <if test="endTime != null and endTime != ''">AND END_TIME LIKE CONCAT('%',#{endTime},'%')</if>
+      <if test="active != null and active != ''">AND ACTIVE LIKE CONCAT('%',#{active},'%')</if>
+      <if test="maxDelayed != null and maxDelayed != ''">AND MAX_DELAYED LIKE CONCAT('%',#{maxDelayed},'%')</if>
+      <if test="cvDelayed != null and cvDelayed != ''">AND CV_DELAYED LIKE CONCAT('%',#{cvDelayed},'%')</if>
+      <if test="judgeLineName != null and judgeLineName != ''">AND JUDGE_LINE_NAME LIKE CONCAT('%',#{judgeLineName},'%')</if>
+      <if test="date != null and date != ''">AND DATE LIKE CONCAT('%',#{date},'%')</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="MooLbsDayMap">SELECT <include refid="columns"/> FROM moo_lbs_day
+    <where>
+    	<if test="par != null ">
+	      <if test="par.mac != null and par.mac != ''">AND MAC = #{par.mac}</if>
+	      <if test="par.date != null and par.date != ''">AND DATE = #{par.date}</if>
+      	</if>
+    </where>
+    ORDER BY UP_TIMES
+    LIMIT #{offset},#{limit} 
+  </select>
+  <select id="total" parameterType="map" resultType="int">
+		SELECT COUNT(id) FROM moo_lbs_day
+	    <where>
+		     <if test="par != null ">
+		      <if test="par.mac != null and par.mac != ''">AND MAC = #{par.mac}</if>
+		      <if test="par.date != null and par.date != ''">AND DATE = #{par.date}</if>
+	      	</if>
+	    </where>
+	</select>
+  
+  <!--插入记录-->
+  <insert id="save" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsDay">INSERT INTO moo_lbs_day (<include refid="columns"/>) VALUES (#{mac},#{lineName},#{statrTime},#{endTime},#{active},#{maxDelayed},#{upTimes},#{judgeLineName},#{date},#{analysisDate})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM moo_lbs_day WHERE ID=#{id}</delete>
+  
+  <delete id="deleteByDate">DELETE FROM moo_lbs_day WHERE DATE=#{date}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsDay">UPDATE moo_lbs_day
+    <set>
+      <if test="mac != null">MAC = #{mac}, </if>
+      <if test="lineName != null">LINE_NAME = #{lineName}, </if>
+      <if test="statrTime != null">STATR_TIME = #{statrTime}, </if>
+      <if test="endTime != null">END_TIME = #{endTime}, </if>
+      <if test="active != null">ACTIVE = #{active}, </if>
+      <if test="maxDelayed != null">MAX_DELAYED = #{maxDelayed}, </if>
+      <if test="cvDelayed != null">CV_DELAYED = #{cvDelayed}, </if>
+      <if test="judgeLineName != null">JUDGE_LINE_NAME = #{judgeLineName}, </if>
+      <if test="date != null">DATE = #{date}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+   <update id="updateJudgeLineName" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsDay">UPDATE moo_lbs_day
+    <set>
+      <if test="judgeLineName != null">JUDGE_LINE_NAME = #{judgeLineName}, </if>
+    </set>WHERE MAC = #{mac} AND DATE = #{date}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.lbs.domain.MooLbsDay" id="MooLbsDayMap">
+    <result column="ID" property="id"/>
+    <result column="MAC" property="mac"/>
+    <result column="LINE_NAME" property="lineName"/>
+    <result column="STATR_TIME" property="statrTime"/>
+    <result column="END_TIME" property="endTime"/>
+    <result column="ACTIVE" property="active"/>
+    <result column="MAX_DELAYED" property="maxDelayed"/>
+    <result column="UP_TIMES" property="upTimes"/>
+    <result column="JUDGE_LINE_NAME" property="judgeLineName"/>
+    <result column="DATE" property="date"/>
+    <result column="ANALYSIS_DATE" property="analysisDate"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">MAC,LINE_NAME,STATR_TIME,END_TIME,ACTIVE,MAX_DELAYED,UP_TIMES,JUDGE_LINE_NAME,DATE,ANALYSIS_DATE</sql>
+</mapper>

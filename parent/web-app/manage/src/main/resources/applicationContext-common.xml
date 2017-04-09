@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"  >
+
+	<description>Spring公共配置 </description>
+	
+	<!-- Spring 工具类 -->
+ 	<bean id="springContextUtil" class="com.neo.admin.common.tools.SpringContextUtil" />
+
+	<import resource="classpath*:spring-web.xml" />
+	<import resource="classpath*:spring-mysql.xml" />
+	<import resource="classpath*:spring-security.xml" />
+	<!-- <import resource="classpath*:spring-mongodb.xml" /> -->
+	<import resource="classpath*:spring-quatz.xml" />
+</beans>

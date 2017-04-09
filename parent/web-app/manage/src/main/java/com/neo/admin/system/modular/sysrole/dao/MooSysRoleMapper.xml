@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.sysrole.dao.MooSysRoleMapper">
+	<!--查询一条记录 -->
+	<select id="findById" resultMap="MooSysRoleMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_role WHERE ROLE_ID=#{roleId}
+	</select>
+	<!-- 根据权限查询资源列表 -->
+	<select id="findByResource" resultMap="MooSysRoleMap">
+		SELECT * FROM moo_sys_role
+		INNER JOIN
+		(SELECT moo_sys_resource_role.ROLE_ID FROM
+		moo_sys_resource_role WHERE
+		moo_sys_resource_role.RESOURCE_ID=#{resourceId}) a
+		ON
+		moo_sys_role.ROLE_ID = a.ROLE_ID
+	</select>
+	
+	<select id="findByUser" resultMap="MooSysRoleMap">
+		SELECT * FROM moo_sys_role
+		INNER JOIN
+		(SELECT moo_sys_role_user.ROLE_ID FROM
+		moo_sys_role_user WHERE
+		moo_sys_role_user.U_ID=#{uId}) a
+		ON
+		moo_sys_role.ROLE_ID = a.ROLE_ID
+	</select>
+	
+	<!--查询所有记录 -->
+	<select id="findAll" resultMap="MooSysRoleMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_role
+	</select>
+	<!--按条件查询 -->
+	<select id="search" parameterType="map" resultMap="MooSysRoleMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_role
+		<where>
+			<if test="roleId != null and roleId != ''">ROLE_ID = #{roleId}</if>
+			<if test="roleName != null and roleName != ''">AND ROLE_NAME = #{roleName}</if>
+			<if test="roleCode != null and roleCode != ''">AND ROLE_CODE = #{roleCode}</if>
+			<if test="pRoleId != null and pRoleId != ''">AND P_ROLE_ID = #{pRoleId}</if>
+			<if test="number != null and number != ''">AND NUMBER = #{number}</if>
+			<if test="creDate != null and creDate != ''">AND CRE_DATE = #{creDate}</if>
+			<if test="creName != null and creName != ''">AND CRE_NAME = #{creName}</if>
+		</where>
+	</select>
+	<!--分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="MooSysRoleMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_role
+		<where>
+			<if test="roleId != null and roleId != ''">ROLE_ID = #{keyWord}</if>
+			<if test="roleName != null and roleName != ''">OR ROLE_NAME = #{keyWord}</if>
+			<if test="roleCode != null and roleCode != ''">OR ROLE_CODE = #{keyWord}</if>
+			<if test="pRoleId != null and pRoleId != ''">OR P_ROLE_ID = #{keyWord}</if>
+			<if test="number != null and number != ''">OR NUMBER = #{keyWord}</if>
+			<if test="creDate != null and creDate != ''">OR CRE_DATE = #{keyWord}</if>
+			<if test="creName != null and creName != ''">OR CRE_NAME = #{keyWord}</if>
+		</where>
+		ORDER BY CRE_DATE DESC
+		LIMIT #{offset},#{limit}
+	</select>
+	<select id="total" parameterType="map" resultType="int">
+		SELECT COUNT(ROLE_ID) FROM moo_sys_role
+		<where>
+			<if test="roleId != null and roleId != ''">ROLE_ID = #{keyWord}</if>
+			<if test="roleName != null and roleName != ''">OR ROLE_NAME = #{keyWord}</if>
+			<if test="roleCode != null and roleCode != ''">OR ROLE_CODE = #{keyWord}</if>
+			<if test="pRoleId != null and pRoleId != ''">OR P_ROLE_ID = #{keyWord}</if>
+			<if test="number != null and number != ''">OR NUMBER = #{keyWord}</if>
+			<if test="creDate != null and creDate != ''">OR CRE_DATE = #{keyWord}</if>
+			<if test="creName != null and creName != ''">OR CRE_NAME = #{keyWord}</if>
+		</where>
+	</select>
+
+	<!--插入记录 -->
+	<insert id="save" parameterType="MooSysRole">
+		INSERT INTO moo_sys_role (
+		<include refid="columns" />
+		) VALUES
+		(#{roleId},#{roleName},#{roleCode},#{pRoleId},#{number},#{creDate},#{creName})
+	</insert>
+	
+	<insert id="saveResourceRole" parameterType="map">
+		INSERT INTO moo_sys_resource_role (
+		RELATION_ID,RESOURCE_ID,ROLE_ID
+		) VALUES
+		(#{relationId},#{resourceId},#{roleId})
+	</insert>
+	
+	<!--删除记录 -->
+	<delete id="delete">DELETE FROM moo_sys_role WHERE ROLE_ID=#{roleId}
+	</delete>
+	<delete id="deleteRelationByRole">DELETE FROM moo_sys_resource_role WHERE ROLE_ID=#{roleId}
+	</delete>
+	<!--修改记录 -->
+	<update id="update" parameterType="MooSysRole">
+		UPDATE moo_sys_role
+		<set>
+			<if test="roleName != null">ROLE_NAME = #{roleName}, </if>
+			<if test="roleCode != null">ROLE_CODE = #{roleCode}, </if>
+			<if test="pRoleId != null">P_ROLE_ID = #{pRoleId}, </if>
+			<if test="number != null and number != ''">NUMBER = #{keyWord}</if>
+			<if test="creDate != null and creDate != ''">CRE_DATE = #{keyWord}</if>
+			<if test="creName != null and creName != ''">CRE_NAME = #{keyWord}</if>
+		</set>
+		WHERE ROLE_ID=#{roleId}
+	</update>
+	<!--结果映射 -->
+	<resultMap type="MooSysRole" id="MooSysRoleMap">
+		<result column="ROLE_ID" property="roleId" />
+		<result column="ROLE_NAME" property="roleName" />
+		<result column="ROLE_CODE" property="roleCode" />
+		<result column="P_ROLE_ID" property="pRoleId" />
+		<result column="NUMBER" property="number" />
+		<result column="CRE_DATE" property="creDate" />
+		<result column="CRE_NAME" property="creName" />
+	</resultMap>
+	<!--查询字段 -->
+	<sql id="columns">ROLE_ID,ROLE_NAME,ROLE_CODE,P_ROLE_ID,NUMBER,CRE_DATE,CRE_NAME
+	</sql>
+</mapper>

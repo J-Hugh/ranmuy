@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.lbs.dao.MooLbsStationDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="MooLbsStationMap">SELECT <include refid="columns"/> FROM moo_lbs_station WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="MooLbsStationMap">SELECT <include refid="columns"/> FROM moo_lbs_station</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="MooLbsStationMap">SELECT <include refid="columns"/> FROM moo_lbs_station
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="lineId != null and lineId != ''">AND LINE_ID LIKE CONCAT('%',#{lineId},'%')</if>
+      <if test="stationNum != null and stationNum != ''">AND STATION_NUM LIKE CONCAT('%',#{stationNum},'%')</if>
+      <if test="name != null and name != ''">AND NAME LIKE CONCAT('%',#{name},'%')</if>
+      <if test="lon != null and lon != ''">AND LON LIKE CONCAT('%',#{lon},'%')</if>
+      <if test="lat != null and lat != ''">AND LAT LIKE CONCAT('%',#{lat},'%')</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="MooLbsStationMap">SELECT <include refid="columns"/> FROM moo_lbs_station
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="lineId != null and lineId != ''">AND LINE_ID LIKE CONCAT('%',#{lineId},'%')</if>
+      <if test="stationNum != null and stationNum != ''">AND STATION_NUM LIKE CONCAT('%',#{stationNum},'%')</if>
+      <if test="name != null and name != ''">AND NAME LIKE CONCAT('%',#{name},'%')</if>
+      <if test="lon != null and lon != ''">AND LON LIKE CONCAT('%',#{lon},'%')</if>
+      <if test="lat != null and lat != ''">AND LAT LIKE CONCAT('%',#{lat},'%')</if>
+    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsStation">INSERT INTO moo_lbs_station (<include refid="columns"/>) 
+  VALUES (#{id},#{lineId},#{stationNum},#{name},#{lon},#{lat},#{gps_lon},#{gps_lat})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM moo_lbs_station WHERE ID=#{id}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.lbs.domain.MooLbsStation">UPDATE moo_lbs_station
+    <set>
+      <if test="lineId != null">LINE_ID = #{lineId}, </if>
+      <if test="stationNum != null">STATION_NUM = #{stationNum}, </if>
+      <if test="name != null">NAME = #{name}, </if>
+      <if test="lon != null">LON = #{lon}, </if>
+      <if test="lat != null">LAT = #{lat}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.lbs.domain.MooLbsStation" id="MooLbsStationMap">
+    <result column="ID" property="id"/>
+    <result column="LINE_ID" property="lineId"/>
+    <result column="STATION_NUM" property="stationNum"/>
+    <result column="NAME" property="name"/>
+    <result column="LON" property="lon"/>
+    <result column="LAT" property="lat"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,LINE_ID,STATION_NUM,NAME,LON,LAT,GPS_LON,GPS_LAT</sql>
+</mapper>

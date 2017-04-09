@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.lbs.dao.TLbsMinuteDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="TLbsMinuteMap">SELECT <include refid="columns"/> FROM t_lbs_minute WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="TLbsMinuteMap">SELECT <include refid="columns"/> FROM t_lbs_minute</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="TLbsMinuteMap">SELECT <include refid="columns"/> FROM t_lbs_minute
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="company != null and company != ''">AND COMPANY LIKE CONCAT('%',#{company},'%')</if>
+      <if test="city != null and city != ''">AND CITY LIKE CONCAT('%',#{city},'%')</if>
+      <if test="busNum != null and busNum != ''">AND BUS_NUM LIKE CONCAT('%',#{busNum},'%')</if>
+      <if test="date != null and date != ''">AND DATE LIKE CONCAT('%',#{date},'%')</if>
+    </where>
+  </select>
+  <select id="searchByMonth" parameterType="map" resultMap="TLbsMinuteMap">SELECT <include refid="columns"/> FROM t_lbs_minute
+    <where>
+     	DATE BETWEEN #{startDate} AND #{endDate}
+     	<if test="company != null and company != ''">AND COMPANY = #{company}</if>
+     	<if test="city != null and city != ''">AND CITY =#{city}</if>
+    </where>
+  </select>
+  
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="TLbsMinuteMap">SELECT <include refid="columns"/> FROM t_lbs_minute
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="company != null and company != ''">AND COMPANY LIKE CONCAT('%',#{company},'%')</if>
+      <if test="city != null and city != ''">AND CITY LIKE CONCAT('%',#{city},'%')</if>
+      <if test="busNum != null and busNum != ''">AND BUS_NUM LIKE CONCAT('%',#{busNum},'%')</if>
+      <if test="date != null and date != ''">AND DATE LIKE CONCAT('%',#{date},'%')</if>
+    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="com.neo.admin.system.modular.lbs.domain.TLbsMinute">INSERT INTO t_lbs_minute (<include refid="insert_columns"/>) VALUES (#{company},#{city},#{busNum},#{date})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM t_lbs_minute WHERE ID=#{id}</delete>
+  <!--按日期删除-->
+  <delete id="deleteByDate">DELETE FROM t_lbs_minute WHERE DATE = #{date}</delete>
+  
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.lbs.domain.TLbsMinute">UPDATE t_lbs_minute
+    <set>
+      <if test="company != null">COMPANY = #{company}, </if>
+      <if test="city != null">CITY = #{city}, </if>
+      <if test="busNum != null">BUS_NUM = #{busNum}, </if>
+      <if test="date != null">DATE = #{date}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.lbs.domain.TLbsMinute" id="TLbsMinuteMap">
+    <result column="ID" property="id"/>
+    <result column="COMPANY" property="company"/>
+    <result column="CITY" property="city"/>
+    <result column="BUS_NUM" property="busNum"/>
+    <result column="DATE" property="date"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,COMPANY,CITY,BUS_NUM,DATE</sql>
+  
+  <sql id="insert_columns">COMPANY,CITY,BUS_NUM,DATE</sql>
+  
+</mapper>

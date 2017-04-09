@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.deviceMonitor.dao.TDeviceMonitorDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="apMac != null and apMac != ''">AND AP_MAC LIKE CONCAT('%',#{apMac},'%')</if>
+      <if test="onlineTimeLength != null and onlineTimeLength != ''">AND ONLINE_TIME_LENGTH LIKE CONCAT('%',#{onlineTimeLength},'%')</if>
+      <if test="shutDownTimes != null and shutDownTimes != ''">AND SHUT_DOWN_TIMES LIKE CONCAT('%',#{shutDownTimes},'%')</if>
+      <if test="linkage != null and linkage != ''">AND LINKAGE LIKE CONCAT('%',#{linkage},'%')</if>
+      <if test="moveDistance != null and moveDistance != ''">AND MOVE_DISTANCE LIKE CONCAT('%',#{moveDistance},'%')</if>
+      <if test="gpsTimes != null and gpsTimes != ''">AND GPS_TIMES LIKE CONCAT('%',#{gpsTimes},'%')</if>
+      <if test="heartbeatTimes != null and heartbeatTimes != ''">AND HEARTBEAT_TIMES LIKE CONCAT('%',#{heartbeatTimes},'%')</if>
+      <if test="connTimes != null and connTimes != ''">AND CONN_TIMES LIKE CONCAT('%',#{connTimes},'%')</if>
+      <if test="city != null and city != ''">AND CITY LIKE CONCAT('%',#{city},'%')</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE LIKE CONCAT('%',#{recordDate},'%')</if>
+      <if test="manufacturer != null and manufacturer != ''">AND MANUFACTURER LIKE CONCAT('%',#{manufacturer},'%')</if>
+      <if test="lineName != null and lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{lineName},'%')</if>
+      <if test="authTimes != null and authTimes != ''">AND AUTH_TIMES LIKE CONCAT('%',#{authTimes},'%')</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor
+    <where>
+      <if test="par.apMac != null and par.apMac != ''">AND AP_MAC = #{par.apMac}</if>
+      <if test="par.city != null and par.city != ''">AND CITY = #{par.city} </if>
+      <if test="par.recordDate != null and par.recordDate != ''">AND RECORD_DATE = #{par.recordDate}</if>
+      <if test="par.lineName != null and par.lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{par.lineName},'%')</if>
+    </where>
+    ORDER BY ABS(1 - GPS_TIMES*7/ONLINE_TIME_LENGTH) DESC
+    LIMIT #{offset},#{limit} 
+  </select>
+  <select id="total" parameterType="map" resultType="int">
+	  SELECT COUNT(1) FROM t_device_monitor
+	    <where>
+	      <if test="par.apMac != null and par.apMac != ''">AND AP_MAC = #{par.apMac}</if>
+	      <if test="par.city != null and par.city != ''">AND CITY = #{par.city} </if>
+	      <if test="par.recordDate != null and par.recordDate != ''">AND RECORD_DATE = #{par.recordDate}</if>
+	      <if test="par.lineName != null and par.lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{par.lineName},'%')</if>
+	    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="com.neo.admin.system.modular.deviceMonitor.domain.TDeviceMonitor">INSERT INTO t_device_monitor (<include refid="columns"/>) VALUES (#{id},#{apMac},#{onlineTimeLength},#{shutDownTimes},#{linkage},#{moveDistance},#{gpsTimes},#{heartbeatTimes},#{connTimes},#{city},#{recordDate},#{manufacturer},#{lineName},#{authTimes})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM t_device_monitor WHERE ID=#{id}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="com.neo.admin.system.modular.deviceMonitor.domain.TDeviceMonitor">UPDATE t_device_monitor
+    <set>
+      <if test="apMac != null">AP_MAC = #{apMac}, </if>
+      <if test="onlineTimeLength != null">ONLINE_TIME_LENGTH = #{onlineTimeLength}, </if>
+      <if test="shutDownTimes != null">SHUT_DOWN_TIMES = #{shutDownTimes}, </if>
+      <if test="linkage != null">LINKAGE = #{linkage}, </if>
+      <if test="moveDistance != null">MOVE_DISTANCE = #{moveDistance}, </if>
+      <if test="gpsTimes != null">GPS_TIMES = #{gpsTimes}, </if>
+      <if test="heartbeatTimes != null">HEARTBEAT_TIMES = #{heartbeatTimes}, </if>
+      <if test="connTimes != null">CONN_TIMES = #{connTimes}, </if>
+      <if test="city != null">CITY = #{city}, </if>
+      <if test="recordDate != null">RECORD_DATE = #{recordDate}, </if>
+      <if test="manufacturer != null">MANUFACTURER = #{manufacturer}, </if>
+      <if test="lineName != null">LINE_NAME = #{lineName}, </if>
+      <if test="authTimes != null">AUTH_TIMES = #{authTimes}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.deviceMonitor.domain.TDeviceMonitor" id="TDeviceMonitorMap">
+    <result column="ID" property="id"/>
+    <result column="AP_MAC" property="apMac"/>
+    <result column="ONLINE_TIME_LENGTH" property="onlineTimeLength"/>
+    <result column="SHUT_DOWN_TIMES" property="shutDownTimes"/>
+    <result column="LINKAGE" property="linkage"/>
+    <result column="MOVE_DISTANCE" property="moveDistance"/>
+    <result column="GPS_TIMES" property="gpsTimes"/>
+    <result column="HEARTBEAT_TIMES" property="heartbeatTimes"/>
+    <result column="CONN_TIMES" property="connTimes"/>
+    <result column="CITY" property="city"/>
+    <result column="RECORD_DATE" property="recordDate"/>
+    <result column="MANUFACTURER" property="manufacturer"/>
+    <result column="LINE_NAME" property="lineName"/>
+    <result column="AUTH_TIMES" property="authTimes"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,AP_MAC,ONLINE_TIME_LENGTH,SHUT_DOWN_TIMES,LINKAGE,MOVE_DISTANCE,GPS_TIMES,HEARTBEAT_TIMES,CONN_TIMES,CITY,RECORD_DATE,MANUFACTURER,LINE_NAME,AUTH_TIMES</sql>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.sysuser.dao.MooSysUserMapper">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="MooSysUserMap">SELECT <include refid="columns"/> FROM moo_sys_user WHERE U_ID=#{uId}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="MooSysUserMap">SELECT <include refid="columns"/> FROM moo_sys_user</select>
+  <!-- 根据账号查询 -->
+  <select id="findByAccount" resultMap="MooSysUserMap">SELECT <include refid="columns"/> FROM moo_sys_user WHERE U_ACCOUNT = #{uAccount} AND DEL = 1</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="MooSysUserMap">SELECT <include refid="columns"/> FROM moo_sys_user
+    <where>
+      <if test="uId != null and uId != ''">U_ID = #{uId}</if>
+      <if test="uAccount != null and uAccount != ''">AND U_ACCOUNT = #{uAccount}</if>
+      <if test="uPassword != null and uPassword != ''">AND U_PASSWORD = #{uPassword}</if>
+      <if test="uName != null and uName != ''">AND U_NAME = #{uName}</if>
+      <if test="regDate != null and regDate != ''">AND REG_DATE = #{regDate}</if>
+      <if test="qqNumber != null and qqNumber != ''">AND QQ_NUMBER = #{qqNumber}</if>
+      <if test="phoneNumber != null and phoneNumber != ''">AND PHONE_NUMBER = #{phoneNumber}</if>
+      <if test="uState != null and uState != ''">AND U_STATE = #{uState}</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="MooSysUserMap">SELECT a.*,moo_sys_role.ROLE_NAME FROM(SELECT <include refid="columns"/> FROM moo_sys_user
+    <where>
+      <if test="keyWord != null and keyWord != ''">OR U_ACCOUNT = #{keyWord}</if>
+      <if test="keyWord != null and keyWord != ''">OR U_NAME = #{keyWord}</if>
+      <if test="keyWord != null and keyWord != ''">OR PHONE_NUMBER = #{keyWord}</if>
+      AND DEL = 1
+    </where>
+    ORDER BY U_ID DESC ) a
+     LEFT JOIN moo_sys_role ON a.ROLE_ID = moo_sys_role.ROLE_ID
+    LIMIT #{offset},#{limit}
+  </select>
+  <select id="total" parameterType="map" resultType="int">
+  	SELECT COUNT(U_ID) FROM moo_sys_user
+    <where>
+      <if test="keyWord != null and keyWord != ''">OR U_ACCOUNT = #{keyWord}</if>
+      <if test="keyWord != null and keyWord != ''">OR U_NAME = #{keyWord}</if>
+      <if test="keyWord != null and keyWord != ''">OR PHONE_NUMBER = #{keyWord}</if>
+      AND DEL = 1
+    </where>
+  </select>
+  
+  <!--插入记录-->
+  <insert id="save" parameterType="MooSysUser">INSERT INTO moo_sys_user (<include refid="columns"/>) VALUES (#{uId},#{uAccount},#{uPassword},#{uName},#{regDate},#{qqNumber},#{phoneNumber},#{uState},#{roleId})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM moo_sys_user WHERE U_ID=#{uId}</delete>
+  <!-- 虚拟删除 -->
+  <update id="virtualDel" >UPDATE moo_sys_user
+    <set>
+     	DEL = 0
+    </set> WHERE U_ID=#{uId}
+  </update>
+  <!--修改记录-->
+  <update id="update" parameterType="MooSysUser">UPDATE moo_sys_user
+    <set>
+      <if test="uAccount != null">U_ACCOUNT = #{uAccount}, </if>
+      <if test="uPassword != null">U_PASSWORD = #{uPassword}, </if>
+      <if test="uName != null">U_NAME = #{uName}, </if>
+      <if test="qqNumber != null and qqNumber != ''">QQ_NUMBER = #{qqNumber} ,</if>
+      <if test="phoneNumber != null and phoneNumber != ''">PHONE_NUMBER = #{phoneNumber} ,</if>
+      <if test="uState != null and uState != ''">U_STATE = #{uState},</if>
+      <if test="roleId != null and roleId != ''">ROLE_ID = #{roleId}</if>
+    </set> WHERE U_ID=#{uId}
+  </update>
+  
+  <!--结果映射-->
+  <resultMap type="MooSysUser" id="MooSysUserMap">
+    <result column="U_ID" property="uId"/>
+    <result column="U_ACCOUNT" property="uAccount"/>
+    <result column="U_PASSWORD" property="uPassword"/>
+    <result column="U_NAME" property="uName"/>
+    <result column="REG_DATE" property="regDate"/>
+    <result column="QQ_NUMBER" property="qqNumber"/>
+    <result column="PHONE_NUMBER" property="phoneNumber"/>
+    <result column="U_STATE" property="uState"/>
+    <result column="ROLE_ID" property="roleId"/>
+    <result column="ROLE_NAME" property="roleName"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">U_ID,U_ACCOUNT,U_PASSWORD,U_NAME,REG_DATE,QQ_NUMBER,PHONE_NUMBER,U_STATE,ROLE_ID</sql>
+</mapper>

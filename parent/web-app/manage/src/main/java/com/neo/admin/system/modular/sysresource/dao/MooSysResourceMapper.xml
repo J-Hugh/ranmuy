@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.neo.admin.system.modular.sysresource.dao.MooSysResourceMapper">
+
+	<!--查询一条记录 -->
+	<select id="findById" resultMap="MooSysResourceMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_resource WHERE RESOURCE_ID=#{resourceId}
+	</select>
+
+	<select id="findByRoleId" resultType="String">
+		SELECT RESOURCE_ID FROM
+		moo_sys_resource_role WHERE ROLE_ID=#{roleId}
+	</select>
+	<!-- 根据上级菜单查询记录 -->
+	<select id="findByPId" resultMap="MooSysResourceMap">
+		SELECT <include refid="columns" /> FROM
+		moo_sys_resource WHERE P_RESOURCE_ID=#{pId}
+	</select>
+
+	<!-- 根据权限查询所有菜单资源 -->
+	<select id="findByRoleIds" resultMap="MooSysResourceMap">
+		SELECT * FROM moo_sys_resource , (SELECT RESOURCE_ID FROM
+		moo_sys_resource_role where ROLE_ID IN
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		GROUP BY RESOURCE_ID) rel
+		WHERE moo_sys_resource.RESOURCE_ID = rel.RESOURCE_ID AND ISMENU = 'Y';
+	</select>
+
+	<select id="findByResourceIds" resultMap="MooSysResourceMap">
+		SELECT * FROM moo_sys_resource  WHERE RESOURCE_ID IN
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+	<!--查询所有记录 -->
+	<select id="findAllMenu" resultMap="MooSysResourceMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_resource  WHERE ISMENU = 'Y';
+	</select>
+	<select id="findAll" resultMap="MooSysResourceMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_resource 
+	</select>
+	
+	<!--按条件查询 -->
+	<select id="search" parameterType="map" resultMap="MooSysResourceMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_resource
+		<where>
+			<if test="resourceId != null and resourceId != ''">RESOURCE_ID = #{resourceId}</if>
+			<if test="resourceName != null and resourceName != ''">AND RESOURCE_NAME = #{resourceName}</if>
+			<if test="resources != null and resources != ''">AND RESOURCES = #{resources}</if>
+			<if test="attribute != null and attribute != ''">AND ATTRIBUTE = #{attribute}</if>
+			<if test="pResourceId != null and pResourceId != ''">AND P_RESOURCE_ID = #{pResourceId}</if>
+			<if test="ismenu != null and ismenu != ''">AND ISMENU = #{ismenu}</if>
+		</where>
+	</select>
+	<!--分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="MooSysResourceMap">
+		SELECT
+		<include refid="columns" />
+		FROM moo_sys_resource
+		<where>
+			<if test="resourceId != null and resourceId != ''">RESOURCE_ID = #{resourceId}</if>
+			<if test="resourceName != null and resourceName != ''">AND RESOURCE_NAME = #{resourceName}</if>
+			<if test="resources != null and resources != ''">AND RESOURCES = #{resources}</if>
+			<if test="attribute != null and attribute != ''">AND ATTRIBUTE = #{attribute}</if>
+			<if test="pResourceId != null and pResourceId != ''">AND P_RESOURCE_ID = #{pResourceId}</if>
+			<if test="ismenu != null and ismenu != ''">AND ISMENU = #{ismenu}</if>
+		</where>
+		LIMIT #{offset},#{limit}
+	</select>
+	<select id="searchTotal" parameterType="map" resultType="int">
+		SELECT
+		COUNT(resourceId)
+		FROM moo_sys_resource
+		<where>
+			<if test="resourceId != null and resourceId != ''">RESOURCE_ID = #{resourceId}</if>
+			<if test="resourceName != null and resourceName != ''">AND RESOURCE_NAME = #{resourceName}</if>
+			<if test="resources != null and resources != ''">AND RESOURCES = #{resources}</if>
+			<if test="attribute != null and attribute != ''">AND ATTRIBUTE = #{attribute}</if>
+			<if test="pResourceId != null and pResourceId != ''">AND P_RESOURCE_ID = #{pResourceId}</if>
+			<if test="ismenu != null and ismenu != ''">AND ISMENU = #{ismenu}</if>
+		</where>
+	</select>
+
+	<!--插入记录 -->
+	<insert id="save" parameterType="MooSysResource">
+		INSERT INTO moo_sys_resource (
+		<include refid="columns" />
+		) VALUES
+		(#{resourceId},#{resourceName},#{resources},#{attribute},#{pResourceId},#{ismenu},#{icon})
+	</insert>
+	<!--删除记录 -->
+	<delete id="delete">DELETE FROM moo_sys_resource WHERE
+		RESOURCE_ID=#{resourceId}
+	</delete>
+	<!-- 根据上级菜单删除记录 -->
+	<delete id="delByPId">DELETE FROM moo_sys_resource WHERE
+		P_RESOURCE_ID=#{pId}
+	</delete>
+	<!--修改记录 -->
+	<update id="update" parameterType="MooSysResource">
+		UPDATE moo_sys_resource
+		<set>
+			<if test="resourceName != null">RESOURCE_NAME = #{resourceName}, </if>
+			<if test="resources != null">RESOURCES = #{resources}, </if>
+			<if test="attribute != null">ATTRIBUTE = #{attribute}, </if>
+			<if test="pResourceId != null">P_RESOURCE_ID = #{pResourceId}, </if>
+			<if test="ismenu != null">ISMENU = #{ismenu}, </if>
+		</set>
+		WHERE RESOURCE_ID=#{resourceId}
+	</update>
+	<!--结果映射 -->
+	<resultMap type="MooSysResource" id="MooSysResourceMap">
+		<result column="RESOURCE_ID" property="resourceId" />
+		<result column="RESOURCE_NAME" property="resourceName" />
+		<result column="RESOURCES" property="resources" />
+		<result column="ATTRIBUTE" property="attribute" />
+		<result column="P_RESOURCE_ID" property="pResourceId" />
+		<result column="ISMENU" property="ismenu" />
+		<result column="ICON" property="icon" />
+	</resultMap>
+	<!--查询字段 -->
+	<sql id="columns">RESOURCE_ID,RESOURCE_NAME,RESOURCES,ATTRIBUTE,P_RESOURCE_ID,ISMENU,ICON
+	</sql>
+</mapper>

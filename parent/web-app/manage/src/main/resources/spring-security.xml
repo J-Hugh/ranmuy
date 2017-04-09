@@ -1,0 +1,97 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+ 	
+ 	
+    <http entry-point-ref="loginEntryPoint">
+		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />  
+		<!-- 替换默认的LoginFilter -->
+		<custom-filter ref="customLoginFilter" position="FORM_LOGIN_FILTER" />
+		<!-- 替换默认的LogoutFilter -->
+		<custom-filter ref="customLogoutFilter" position="LOGOUT_FILTER" />
+		<headers>
+	        <frame-options policy="SAMEORIGIN" />
+	    </headers>
+	</http>
+    
+    <beans:bean id="loginEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<!-- 默认登录页的url -->
+		<beans:constructor-arg value="/login.moo" />
+	</beans:bean>
+	
+
+	 <!-- 一个自定义的filter，必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性，
+	 	我们的所有控制将在这三个类中实现，解释详见具体配置  -->  
+    <beans:bean id="myFilter" class="com.neo.admin.system.security.FilterSecurityInterceptor">  
+       
+        <!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源     -->  
+        <beans:property name="accessDecisionManager" ref="AccessDecisionManager" />
+        <beans:property name="securityMetadataSource" ref="MySecurityMetadataSource" />  
+    </beans:bean>
+	
+	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问     -->  
+    <beans:bean id="MySecurityMetadataSource" init-method="loadResourceDefine" class="com.neo.admin.system.security.InvocationSecurityMetadataSourceService" /> 
+	
+	
+	<!-- 登录处理过滤器 -->
+	<beans:bean id="customLoginFilter" class="com.neo.admin.system.security.filter.CustomLoginFilter">
+		<!-- 校验登录是否有效的虚拟url -->
+		<beans:property name="filterProcessesUrl" value="/checklogin" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="usernameParameter" value="username" />
+		<beans:property name="passwordParameter" value="password" />
+		<beans:property name="authenticationSuccessHandler">
+			<!-- 自定义登录成功后的处理handler -->
+			<beans:bean class="com.neo.admin.system.security.handler.CustomLoginHandler">
+				<!-- 登录成功后的默认url -->
+				<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
+				<beans:property name="defaultTargetUrl" value="/home.moo" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="authenticationFailureHandler">
+			<beans:bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+				<!-- 登录失败后的默认Url -->
+				<beans:property name="defaultFailureUrl" value="/login.moo?error" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- 自定义用户认证 -->
+	<authentication-manager alias="authenticationManager">
+		<!-- 加入开发人员自定义的Provider ref="customProvider"  -->
+		<authentication-provider user-service-ref='userDetailsManager'>
+			<password-encoder ref="bcryptEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="customProvider" class="com.neo.admin.system.security.CustomAuthenticationProvider" />
+	<beans:bean id="AccessDecisionManager" class="com.neo.admin.system.security.AccessDecisionManager" />
+	
+	<!-- 登出处理过滤器 -->
+	<beans:bean id="customLogoutFilter" class="com.neo.admin.system.security.filter.CustomLogoutFilter">
+		<!-- 处理退出的虚拟url -->
+		<beans:property name="filterProcessesUrl" value="/logout" />
+		<!-- 退出处理成功后的默认显示url -->
+		<beans:constructor-arg index="0" value="/login.moo?logout" />
+		<beans:constructor-arg index="1">
+			<!-- 退出成功后的handler列表 -->
+			<beans:array>
+				<beans:bean id="securityContextLogoutHandler"
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+				<!-- 加入了开发人员自定义的退出成功处理 -->
+				<beans:bean id="customLogoutSuccessHandler" class="com.neo.admin.system.security.handler.CustomLogoutHandler" />
+			</beans:array>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<!-- 用户详细信息管理：数据源、用户缓存（通过数据库管理用户、角色、权限、资源）。 -->
+	<beans:bean id="userDetailsManager" class="com.neo.admin.system.security.MyUserDetailsService" />
+	
+	
+	<beans:bean name="bcryptEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+</beans:beans>
