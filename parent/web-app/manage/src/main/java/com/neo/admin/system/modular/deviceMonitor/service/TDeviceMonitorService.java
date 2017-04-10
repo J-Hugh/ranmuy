@@ -27,6 +27,7 @@ public class TDeviceMonitorService {
 		 return new BootstrapTable<>(total, rows);
 	}
 
+	
 	/**
 	 * 按条件查询记录
 	 * @param searchParams 条件
@@ -35,7 +36,15 @@ public class TDeviceMonitorService {
 	public List<TDeviceMonitor> search(Map<String,Object> searchParams) throws Exception  {
 		return (List<TDeviceMonitor>) tDeviceMonitorDao.search(searchParams);
 	}
-
+	/**
+	 * 查询近几天的数据
+	 * @param searchParams
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TDeviceMonitor> recently(Map<String,Object> searchParams) throws Exception  {
+		return (List<TDeviceMonitor>) tDeviceMonitorDao.recently(searchParams);
+	}
 	/**
 	 * 获取所有记录
 	 * @return

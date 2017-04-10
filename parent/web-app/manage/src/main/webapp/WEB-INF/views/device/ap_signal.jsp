@@ -36,6 +36,199 @@
     padding: 0px 0px;
 }
 </style>
+<style type="text/css">
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /*height: 100%;*/
+  background-color: #eee;
+  font-family: 'Raleway';
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: block;
+  fill: rgba(51, 51, 51, 0.5);
+  margin-right: 20px;
+  -webkit-transition: all .2s ease-out;
+		  transition: all .2s ease-out;
+}
+
+.icon.active {
+  fill: #E74C3C;
+}
+
+.icon.big {
+  width: 64px;
+  height: 64px;
+  fill: rgba(51, 51, 51, 0.5);
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+	  -ms-flex-align: center;
+		  align-items: center;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+	  -ms-flex-pack: left;
+		  justify-content: left;
+  overflow: hidden;
+}
+
+#left-side {
+  height: 70%;
+  width: 25%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+	  -ms-flex-align: center;
+		  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+	  -ms-flex-pack: center;
+		  justify-content: center;
+}
+#left-side ul li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: 34px;
+  color: rgba(51, 51, 51, 0.5);
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-transition: all .2s ease-out;
+		  transition: all .2s ease-out;
+}
+#left-side ul li:hover {
+  color: #333333;
+  -webkit-transition: all .2s ease-out;
+		  transition: all .2s ease-out;
+}
+#left-side ul li:hover > .icon {
+  fill: #333;
+}
+#left-side ul li.active {
+  color: #333333;
+}
+#left-side ul li.active:hover > .icon {
+  fill: #E74C3C;
+}
+
+#border {
+  height: 288px;
+  width: 1px;
+  background-color: rgba(51, 51, 51, 0.2);
+}
+#border #line.one {
+  width: 5px;
+  height: 54px;
+  background-color: #E74C3C;
+  margin-left: -2px;
+  margin-top: 35px;
+  -webkit-transition: all .4s ease-in-out;
+		  transition: all .4s ease-in-out;
+}
+#border #line.two {
+  width: 5px;
+  height: 54px;
+  background-color: #E74C3C;
+  margin-left: -2px;
+  margin-top: 89px;
+  -webkit-transition: all .4s ease-in-out;
+		  transition: all .4s ease-in-out;
+}
+#border #line.three {
+  width: 5px;
+  height: 54px;
+  background-color: #E74C3C;
+  margin-left: -2px;
+  margin-top: 143px;
+  -webkit-transition: all .4s ease-in-out;
+		  transition: all .4s ease-in-out;
+}
+#border #line.four {
+  width: 5px;
+  height: 54px;
+  background-color: #E74C3C;
+  margin-left: -2px;
+  margin-top: 197px;
+  -webkit-transition: all .4s ease-in-out;
+		  transition: all .4s ease-in-out;
+}
+
+#right-side {
+  height: 300px;
+  width: 75%;
+  overflow: hidden;
+}
+#right-side #first, #right-side #second, #right-side #third, #right-side #fourth {
+  position: absolute;
+  height: 300px;
+  width: 75%;
+  -webkit-transition: all .6s ease-in-out;
+		  transition: all .6s ease-in-out;
+  margin-top: -350px;
+  opacity: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+	  -ms-flex-align: center;
+		  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+	  -ms-flex-pack: center;
+		  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+	  -ms-flex-direction: column;
+		  flex-direction: column;
+}
+#right-side #first h1, #right-side #second h1, #right-side #third h1, #right-side #fourth h1 {
+  font-weight: 800;
+  color: #333;
+}
+#right-side #first p, #right-side #second p, #right-side #third p, #right-side #fourth p {
+  color: #333;
+  font-weight: 500;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+#right-side #first.active, #right-side #second.active, #right-side #third.active, #right-side #fourth.active {
+  margin-top: 0px;
+  opacity: 1;
+  -webkit-transition: all .6s ease-in-out;
+		  transition: all .6s ease-in-out;
+}
+</style>
 </head>
 
 <body class="gray-bg">
@@ -48,87 +241,113 @@
 				<div class="col-sm-12">
 					<div class="ibox float-e-margins">
 						<div class="ibox-content" style="padding-bottom: 3px;">
-							<div class="well" style="margin-bottom: 3px;">
-								<form id="form-num-chart-seach" role="form" class="form-inline">
-									<div class="form-group">
-										<label for="exampleInputEmail2" class="sr-only">MAC</label> 
-										<input name="par[mac]" type="text" placeholder="设备MAC" class="form-control">
-									</div>
-									<div class="form-group">
-										<label for="exampleInputEmail2" class="sr-only">MAC</label> 
-										<input id="data_1" name="par[date]" value="2016-12-24" type="text" placeholder="日期，默认为查询当日" class="form-control">
-									</div>
-	                                <button id="btn-search-chart" class="btn btn-sm btn-primary"
-										type="button" style="margin-bottom: 0px;">&nbsp;查询&nbsp;</button>
-									<button id="btn-back" class="btn btn-sm btn-primary"
-										type="button" style="margin-bottom: 0px;">&nbsp;返回&nbsp;</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" style="margin-left:0px;margin-right:0px; background-color: #fff">
-				<div class="col-lg-3">
-					<div class="ibox float-e-margins">
-						<div class="ibox-content" style="border: 1px solid #e3e3e3;border-radius: 4px; height: calc(100% - 40px);">
-                        	<h4>城市：北京</h4>
-                        	<h4>厂商：锐捷</h4>
-                        	<h4>线路：110路</h4>
-                        	<h4>车内编号：9-32532</h4>
-                        	<h4>车牌号：京A4h415</h4>
-                        	<hr>
-                        	<h4>安装时间：2015-10-21</h4>
-                        	<h4>上线时间：2016-10-21</h4>
-                        	<h4>设备序列号：MPZBH01925</h4>
-                        	<h4>设备型号：BMT2000-30</h4>
-                        	<hr>
-                        	<h4>SIM归属地：杭州</h4>
-                        	<h4>SIM卡号：15382304145</h4>
-                       	</div>
-                   	</div>
-				</div>
-				<div class="col-sm-9">
-					<div class="ibox float-e-margins">
-						<div class="ibox-content" style="border: 1px solid #e3e3e3;border-radius: 4px; ">
-					<div class="panel blank-panel" >
-						<div class="panel-heading" style="padding: 0px 0px;">
-							<div class="panel-options">
-								<ul class="nav nav-tabs">
-									<li class="active"><a data-toggle="tab"
-										href="tabs_panels.html#tab-1">月统计(表格)</a></li>
-									<li class=""><a data-toggle="tab"
-										href="tabs_panels.html#tab-2">月统计(图表)</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="panel-body">
-							<div class="tab-content">
-								<div id="tab-1" class="tab-pane active">
-									<table id="num-table"
-											data-url="<%=basePath%>lbs/busnum.moo"
-											data-toggle = "table"
-											data-side-pagination="server" 
-											data-striped="true" data-click-to-select="true"
-											data-pagination-h-align="left"
-											data-pagination-detail-h-align="right"
-											data-classes="table table-hover"
-							               	data-query-params="ApReal.seachFlowParams">
-										<thead>
-											<th data-field="dateStr">日期</th>
-											<th data-field="busNum">开机时长(分)</th>
-											<th data-field="company">信号强度上报次数</th>
-											<th data-field="city">5分钟上报率</th>
-											<th data-field="city">操作</th>
-										</thead>
-									</table>
-								</div>
-								<div id="tab-2" class="tab-pane">
-									
-								</div>
-							</div>
-						</div>
-						</div>
+							<div id="wrapper">
+  <div id="left-side">
+	<ul>
+	  <li class="choose active">
+		<div class="icon active">
+		  <svg viewBox="0 0 32 32">
+			<g filter="">
+			  <use xlink:href="#shopping-cart"></use>
+			</g>
+		  </svg>
+		</div>
+		Choose
+	  </li>
+	  <li class="pay">
+		<div class="icon">
+		  <svg viewBox="0 0 32 32">
+			<g filter="">
+			  <use xlink:href="#credit-card"></use>
+			</g>
+		  </svg>
+		</div>
+		Pay
+	  </li>
+	  <li class="wrap">
+		<div class="icon">
+		  <svg viewBox="0 0 32 32">
+			<g filter="">
+			  <use xlink:href="#gift"></use>
+			</g>
+		  </svg>
+		</div>
+		Wrap
+	  </li>
+	  <li class="ship">
+		<div class="icon">
+		  <svg viewBox="0 0 32 32">
+			<g filter="">
+			  <use xlink:href="#package"></use>
+			</g>
+		  </svg>
+		</div>
+		Ship
+	  </li>
+	</ul>
+  </div>
+
+  <div id="border">
+	<div id="line" class="one"></div>
+  </div>
+
+  <div id="right-side">
+	<div id="first" class="active">
+	  <div class="icon big">
+		<svg viewBox="0 0 32 32">
+		  <g filter="">
+			<use xlink:href="#shopping-cart"></use>
+		  </g>
+		</svg>
+	  </div>
+
+	  <h1>Choose your gift</h1>
+
+	  <p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗.<br>不支持IE8及以下浏览器。</p>
+	</div>
+	<div id="second">
+	  <div class="icon big">
+		<svg viewBox="0 0 32 32">
+		  <g filter="">
+			<use xlink:href="#credit-card"></use>
+		  </g>
+		</svg>
+	  </div>
+
+	  <h1>Pay for it</h1>
+
+	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at viverra est, eu finibus mauris. Quisque tempus vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu sit amet, aliquet sagittis dolor. </p>
+	</div>
+	<div id="third">
+	  <div class="icon big">
+		<svg viewBox="0 0 32 32">
+		  <g filter="">
+			<use xlink:href="#gift"></use>
+		  </g>
+		</svg>
+	  </div>
+
+	  <h1>We will wrap it</h1>
+
+	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at viverra est, eu finibus mauris. Quisque tempus vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu sit amet, aliquet sagittis dolor. </p>
+
+	</div>
+	<div id="fourth">
+	  <div class="icon big">
+		<svg viewBox="0 0 32 32">
+		  <g filter="">
+			<use xlink:href="#package"></use>
+		  </g>
+		</svg>
+	  </div>
+
+	  <h1>Ship it</h1>
+
+	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at viverra est, eu finibus mauris. Quisque tempus vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu sit amet, aliquet sagittis dolor. </p>
+
+	</div>
+  </div>
+</div>
 						</div>
 					</div>
 				</div>
@@ -164,7 +383,7 @@
 	<script src="<%=resource%>plugins/validate/js/jquery.validationEngine.js?v=0.1"></script>
     
     <!-- baidu echarts -->
-	<script src="<%=resource %>plugins/echarts3/echarts.min(1).js"></script>
+	<script src="<%=resource %>plugins/echarts3/echarts.min.js"></script>
 	<!-- 引入 vintage 主题 -->
 	<script src="<%=resource %>plugins/echarts3/macarons.js"></script>
 	<script src="<%=resource %>plugins/echarts3/china.js"></script>
@@ -173,9 +392,89 @@
     
     <script src="<%=basePath%>moojs/moo-util-1.js"></script>
 	
-	<script src="<%=basePath%>moojs/device/apreal.js?v=1"></script>
+	
 
-	<script type="text/javascript">
-	</script>
+	<script>
+$('.choose').click(function () {
+	$('.choose').addClass('active');
+	$('.choose > .icon').addClass('active');
+	$('.pay').removeClass('active');
+	$('.wrap').removeClass('active');
+	$('.ship').removeClass('active');
+	$('.pay > .icon').removeClass('active');
+	$('.wrap > .icon').removeClass('active');
+	$('.ship > .icon').removeClass('active');
+	$('#line').addClass('one');
+	$('#line').removeClass('two');
+	$('#line').removeClass('three');
+	$('#line').removeClass('four');
+});
+$('.pay').click(function () {
+	$('.pay').addClass('active');
+	$('.pay > .icon').addClass('active');
+	$('.choose').removeClass('active');
+	$('.wrap').removeClass('active');
+	$('.ship').removeClass('active');
+	$('.choose > .icon').removeClass('active');
+	$('.wrap > .icon').removeClass('active');
+	$('.ship > .icon').removeClass('active');
+	$('#line').addClass('two');
+	$('#line').removeClass('one');
+	$('#line').removeClass('three');
+	$('#line').removeClass('four');
+});
+$('.wrap').click(function () {
+	$('.wrap').addClass('active');
+	$('.wrap > .icon').addClass('active');
+	$('.pay').removeClass('active');
+	$('.choose').removeClass('active');
+	$('.ship').removeClass('active');
+	$('.pay > .icon').removeClass('active');
+	$('.choose > .icon').removeClass('active');
+	$('.ship > .icon').removeClass('active');
+	$('#line').addClass('three');
+	$('#line').removeClass('two');
+	$('#line').removeClass('one');
+	$('#line').removeClass('four');
+});
+$('.ship').click(function () {
+	$('.ship').addClass('active');
+	$('.ship > .icon').addClass('active');
+	$('.pay').removeClass('active');
+	$('.wrap').removeClass('active');
+	$('.choose').removeClass('active');
+	$('.pay > .icon').removeClass('active');
+	$('.wrap > .icon').removeClass('active');
+	$('.choose > .icon').removeClass('active');
+	$('#line').addClass('four');
+	$('#line').removeClass('two');
+	$('#line').removeClass('three');
+	$('#line').removeClass('one');
+});
+$('.choose').click(function () {
+	$('#first').addClass('active');
+	$('#second').removeClass('active');
+	$('#third').removeClass('active');
+	$('#fourth').removeClass('active');
+});
+$('.pay').click(function () {
+	$('#first').removeClass('active');
+	$('#second').addClass('active');
+	$('#third').removeClass('active');
+	$('#fourth').removeClass('active');
+});
+$('.wrap').click(function () {
+	$('#first').removeClass('active');
+	$('#second').removeClass('active');
+	$('#third').addClass('active');
+	$('#fourth').removeClass('active');
+});
+$('.ship').click(function () {
+	$('#first').removeClass('active');
+	$('#second').removeClass('active');
+	$('#third').removeClass('active');
+	$('#fourth').addClass('active');
+});
+</script>
 </body>
 </html>

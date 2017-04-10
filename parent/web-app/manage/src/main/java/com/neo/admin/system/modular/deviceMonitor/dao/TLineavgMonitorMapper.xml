@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.deviceLineAvg.dao.TLineavgMonitorDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="TLineavgMonitorMap">SELECT <include refid="columns"/> FROM t_lineavg_monitor WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="TLineavgMonitorMap">SELECT <include refid="columns"/> FROM t_lineavg_monitor</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="TLineavgMonitorMap">SELECT <include refid="columns"/> FROM t_lineavg_monitor
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="lineId != null and lineId != ''">AND LINE_ID LIKE CONCAT('%',#{lineId},'%')</if>
+      <if test="lineName != null and lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{lineName},'%')</if>
+      <if test="avgOnline != null and avgOnline != ''">AND AVG_ONLINE LIKE CONCAT('%',#{avgOnline},'%')</if>
+      <if test="avgShutdown != null and avgShutdown != ''">AND AVG_SHUTDOWN LIKE CONCAT('%',#{avgShutdown},'%')</if>
+      <if test="avgDistance != null and avgDistance != ''">AND AVG_DISTANCE LIKE CONCAT('%',#{avgDistance},'%')</if>
+      <if test="avgLbs != null and avgLbs != ''">AND AVG_LBS LIKE CONCAT('%',#{avgLbs},'%')</if>
+      <if test="avgHeartbeat != null and avgHeartbeat != ''">AND AVG_HEARTBEAT LIKE CONCAT('%',#{avgHeartbeat},'%')</if>
+      <if test="avgConn != null and avgConn != ''">AND AVG_CONN LIKE CONCAT('%',#{avgConn},'%')</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE LIKE CONCAT('%',#{recordDate},'%')</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="TLineavgMonitorMap">SELECT <include refid="columns"/> FROM t_lineavg_monitor
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="lineId != null and lineId != ''">AND LINE_ID LIKE CONCAT('%',#{lineId},'%')</if>
+      <if test="lineName != null and lineName != ''">AND LINE_NAME LIKE CONCAT('%',#{lineName},'%')</if>
+      <if test="avgOnline != null and avgOnline != ''">AND AVG_ONLINE LIKE CONCAT('%',#{avgOnline},'%')</if>
+      <if test="avgShutdown != null and avgShutdown != ''">AND AVG_SHUTDOWN LIKE CONCAT('%',#{avgShutdown},'%')</if>
+      <if test="avgDistance != null and avgDistance != ''">AND AVG_DISTANCE LIKE CONCAT('%',#{avgDistance},'%')</if>
+      <if test="avgLbs != null and avgLbs != ''">AND AVG_LBS LIKE CONCAT('%',#{avgLbs},'%')</if>
+      <if test="avgHeartbeat != null and avgHeartbeat != ''">AND AVG_HEARTBEAT LIKE CONCAT('%',#{avgHeartbeat},'%')</if>
+      <if test="avgConn != null and avgConn != ''">AND AVG_CONN LIKE CONCAT('%',#{avgConn},'%')</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE LIKE CONCAT('%',#{recordDate},'%')</if>
+    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="TLineavgMonitor">INSERT INTO t_lineavg_monitor (<include refid="columns"/>) VALUES (#{id},#{lineId},#{lineName},#{avgOnline},#{avgShutdown},#{avgDistance},#{avgLbs},#{avgHeartbeat},#{avgConn},#{recordDate})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM t_lineavg_monitor WHERE ID=#{id}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="TLineavgMonitor">UPDATE t_lineavg_monitor
+    <set>
+      <if test="lineId != null">LINE_ID = #{lineId}, </if>
+      <if test="lineName != null">LINE_NAME = #{lineName}, </if>
+      <if test="avgOnline != null">AVG_ONLINE = #{avgOnline}, </if>
+      <if test="avgShutdown != null">AVG_SHUTDOWN = #{avgShutdown}, </if>
+      <if test="avgDistance != null">AVG_DISTANCE = #{avgDistance}, </if>
+      <if test="avgLbs != null">AVG_LBS = #{avgLbs}, </if>
+      <if test="avgHeartbeat != null">AVG_HEARTBEAT = #{avgHeartbeat}, </if>
+      <if test="avgConn != null">AVG_CONN = #{avgConn}, </if>
+      <if test="recordDate != null">RECORD_DATE = #{recordDate}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="TLineavgMonitor" id="TLineavgMonitorMap">
+    <result column="ID" property="id"/>
+    <result column="LINE_ID" property="lineId"/>
+    <result column="LINE_NAME" property="lineName"/>
+    <result column="AVG_ONLINE" property="avgOnline"/>
+    <result column="AVG_SHUTDOWN" property="avgShutdown"/>
+    <result column="AVG_DISTANCE" property="avgDistance"/>
+    <result column="AVG_LBS" property="avgLbs"/>
+    <result column="AVG_HEARTBEAT" property="avgHeartbeat"/>
+    <result column="AVG_CONN" property="avgConn"/>
+    <result column="RECORD_DATE" property="recordDate"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,LINE_ID,LINE_NAME,AVG_ONLINE,AVG_SHUTDOWN,AVG_DISTANCE,AVG_LBS,AVG_HEARTBEAT,AVG_CONN,RECORD_DATE</sql>
+</mapper>

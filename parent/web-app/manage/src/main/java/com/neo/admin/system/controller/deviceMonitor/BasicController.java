@@ -1,5 +1,7 @@
 package com.neo.admin.system.controller.deviceMonitor;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,18 @@ public class BasicController extends BaseController {
 		return deviceMonitorFacade.findByPage(this.objToHash(search));
 	}
 	
+	@RequestMapping(value = "recently20Day", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> recently20Day(BaseSearch search) throws Exception {
+		
+		return deviceMonitorFacade.recently20Day(search.getPar().get("apmac"));
+	}
+	
+	@RequestMapping(value = "recently7DayOnline", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> recently7DayOnline(BaseSearch search) throws Exception {
+		
+		return deviceMonitorFacade.recently7DayOnline(search.getPar().get("apmac"));
+	}
 	
 }

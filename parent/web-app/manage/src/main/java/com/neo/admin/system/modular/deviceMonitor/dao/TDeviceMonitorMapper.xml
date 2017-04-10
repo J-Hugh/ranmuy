@@ -26,7 +26,7 @@
     </where>
   </select>
   <!--分页查询-->
-  <select id="searchByPage" parameterType="map" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor
+  <select id="searchByPage" parameterType="map" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/>,ABS(1 - GPS_TIMES*7/ONLINE_TIME_LENGTH) as ERROR FROM t_device_monitor
     <where>
       <if test="par.apMac != null and par.apMac != ''">AND AP_MAC = #{par.apMac}</if>
       <if test="par.city != null and par.city != ''">AND CITY = #{par.city} </if>
@@ -36,6 +36,13 @@
     ORDER BY ABS(1 - GPS_TIMES*7/ONLINE_TIME_LENGTH) DESC
     LIMIT #{offset},#{limit} 
   </select>
+  <select id="recently" parameterType="map" resultMap="TDeviceMonitorMap">SELECT <include refid="columns"/> FROM t_device_monitor
+  	<where>
+      <if test="apMac != null and apMac != ''">AND AP_MAC = #{apMac} AND</if>
+      DATE_SUB(#{lastDay}, INTERVAL #{length} DAY) &lt;=RECORD_DATE 
+    </where>
+  </select>
+  
   <select id="total" parameterType="map" resultType="int">
 	  SELECT COUNT(1) FROM t_device_monitor
 	    <where>
@@ -83,6 +90,7 @@
     <result column="MANUFACTURER" property="manufacturer"/>
     <result column="LINE_NAME" property="lineName"/>
     <result column="AUTH_TIMES" property="authTimes"/>
+    <result column="ERROR" property="error"/>
   </resultMap>
   <!--查询字段-->
   <sql id="columns">ID,AP_MAC,ONLINE_TIME_LENGTH,SHUT_DOWN_TIMES,LINKAGE,MOVE_DISTANCE,GPS_TIMES,HEARTBEAT_TIMES,CONN_TIMES,CITY,RECORD_DATE,MANUFACTURER,LINE_NAME,AUTH_TIMES</sql>

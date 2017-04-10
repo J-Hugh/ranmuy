@@ -35,6 +35,34 @@
 .panel-body {
     padding: 0px 0px;
 }
+
+.fa-exclamation-triangle {
+    position: relative;
+    font-size: 20px;
+    animation: ease-in-out breath 2500ms infinite alternate;
+    -webkit-animation: ease-in-out breath 2500ms infinite alternate;
+    cursor: pointer;
+    text-shadow: 0 0 5px #fff,  
+               0 0 10px #fff,  
+               0 0 10px #FF1177;
+}
+
+@keyframes breath {
+    20% {
+		opacity: .2;
+    }
+    50% {
+        opacity: 1;
+    }
+    70% {
+        opacity: .2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
 </style>
 </head>
 
@@ -101,7 +129,7 @@
 									data-classes="table table-hover"
 					               	data-query-params="ApReal.seachFlowParams">
 								<thead>
-									<th data-field="apMac">设备MAC</th>
+									<th data-field="apMac" data-formatter="ApReal.apmac_formatter">设备MAC</th>
 									<th data-field="city">城市</th>
 									<th data-field="lineName">线路</th>
 									<th data-field="onlineTimeLength">开机时长(分)</th>
@@ -126,7 +154,7 @@
 								<form id="form-num-chart-seach" role="form" class="form-inline">
 									<div class="form-group">
 										<label for="exampleInputEmail2" class="sr-only">MAC</label> 
-										<input name="par[mac]" type="text" placeholder="设备MAC" class="form-control">
+										<input name="par[apmac]" type="text" placeholder="设备MAC" class="form-control">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail2" class="sr-only">MAC</label> 
@@ -142,11 +170,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="row" style="margin-left:0px;margin-right:0px; background-color: #fff;height: 100%;">
+			<div class="row" style="margin-left:0px;margin-right:0px; background-color: #fff;height: calc(100% - 60px);">
 				<div class="col-lg-3">
 					<div class="ibox float-e-margins">
 						<div class="ibox-content" style="border: 1px solid #e3e3e3;border-radius: 4px;">
-                        	
                         	<h4>城市：北京</h4>
                         	<h4>厂商：锐捷</h4>
                         	<h4>线路：110路</h4>
@@ -161,6 +188,7 @@
                         	<hr>
                         	<h4>SIM归属地：杭州</h4>
                         	<h4>SIM卡号：15382304145</h4>
+                        	
                        	</div>
                    	</div>
 				</div>
@@ -174,6 +202,15 @@
 							</div>
 						</div>
 					</div>
+					<div class="row" style="margin-top: 5px;">
+						<div class="col-sm-12">
+							<div class="ibox">
+								<div class="ibox-content" style="border: 1px solid #e3e3e3;border-radius: 4px; height: calc(60% - 10px);">
+									<div id="line-echart" style="width: 100%; height: 100%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -182,6 +219,8 @@
 	<!-- Mainly scripts -->
 	<script src="<%=resource%>framework/jquery-2.1.1.min.js"></script>
 	<script src="<%=resource%>framework/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+	<script src="<%=resource%>plugins/pace/pace.min.js"></script>
 
 	<!-- Bootstrap-table plugin javascript -->
 	<script src="<%=resource%>plugins/bootstrap-table/bootstrap-table.js"></script>
@@ -207,7 +246,7 @@
     <script src="<%=basePath%>moojs/moo-util-1.js"></script>
 	
 	<!-- baidu echarts -->
-	<script src="<%=resource%>plugins/echarts3/echarts.min(1).js"></script>
+	<script src="<%=resource%>plugins/echarts3/echarts.min.js"></script>
 	<!-- 引入 vintage 主题 -->
 	<script src="<%=resource%>plugins/echarts3/macarons.js"></script>
 	<script src="<%=resource%>plugins/echarts3/china.js"></script>

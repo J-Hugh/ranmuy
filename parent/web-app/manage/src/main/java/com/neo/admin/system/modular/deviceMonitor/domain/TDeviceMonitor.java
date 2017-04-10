@@ -59,9 +59,18 @@ public class TDeviceMonitor {
       **/
 	private Integer authTimes;
 
+	private Double error;
 
 	public TDeviceMonitor() {
 		super();
+	}
+
+	public Double getError() {
+		return error;
+	}
+
+	public void setError(Double error) {
+		this.error = error;
 	}
 
 	public Long getId() {

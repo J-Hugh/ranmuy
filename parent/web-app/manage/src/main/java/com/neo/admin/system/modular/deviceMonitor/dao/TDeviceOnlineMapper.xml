@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.admin.system.modular.deviceMonitor.dao.TDeviceOnlineDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="TDeviceOnlineMap">SELECT <include refid="columns"/> FROM t_device_online WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="TDeviceOnlineMap">SELECT <include refid="columns"/> FROM t_device_online</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="TDeviceOnlineMap">SELECT <include refid="columns"/> FROM t_device_online
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="apMac != null and apMac != ''">AND AP_MAC LIKE CONCAT('%',#{apMac},'%')</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE LIKE CONCAT('%',#{recordDate},'%')</if>
+      <if test="_1 != null and _1 != ''">AND _1 LIKE CONCAT('%',#{_1},'%')</if>
+      <if test="_2 != null and _2 != ''">AND _2 LIKE CONCAT('%',#{_2},'%')</if>
+      <if test="_3 != null and _3 != ''">AND _3 LIKE CONCAT('%',#{_3},'%')</if>
+      <if test="_4 != null and _4 != ''">AND _4 LIKE CONCAT('%',#{_4},'%')</if>
+      <if test="_5 != null and _5 != ''">AND _5 LIKE CONCAT('%',#{_5},'%')</if>
+      <if test="_6 != null and _6 != ''">AND _6 LIKE CONCAT('%',#{_6},'%')</if>
+      <if test="_7 != null and _7 != ''">AND _7 LIKE CONCAT('%',#{_7},'%')</if>
+      <if test="_8 != null and _8 != ''">AND _8 LIKE CONCAT('%',#{_8},'%')</if>
+      <if test="_9 != null and _9 != ''">AND _9 LIKE CONCAT('%',#{_9},'%')</if>
+      <if test="_10 != null and _10 != ''">AND _10 LIKE CONCAT('%',#{_10},'%')</if>
+      <if test="_11 != null and _11 != ''">AND _11 LIKE CONCAT('%',#{_11},'%')</if>
+      <if test="_12 != null and _12 != ''">AND _12 LIKE CONCAT('%',#{_12},'%')</if>
+      <if test="_13 != null and _13 != ''">AND _13 LIKE CONCAT('%',#{_13},'%')</if>
+      <if test="_14 != null and _14 != ''">AND _14 LIKE CONCAT('%',#{_14},'%')</if>
+      <if test="_15 != null and _15 != ''">AND _15 LIKE CONCAT('%',#{_15},'%')</if>
+      <if test="_16 != null and _16 != ''">AND _16 LIKE CONCAT('%',#{_16},'%')</if>
+      <if test="_17 != null and _17 != ''">AND _17 LIKE CONCAT('%',#{_17},'%')</if>
+      <if test="_18 != null and _18 != ''">AND _18 LIKE CONCAT('%',#{_18},'%')</if>
+      <if test="_19 != null and _19 != ''">AND _19 LIKE CONCAT('%',#{_19},'%')</if>
+      <if test="_20 != null and _20 != ''">AND _20 LIKE CONCAT('%',#{_20},'%')</if>
+      <if test="_21 != null and _21 != ''">AND _21 LIKE CONCAT('%',#{_21},'%')</if>
+      <if test="_22 != null and _22 != ''">AND _22 LIKE CONCAT('%',#{_22},'%')</if>
+      <if test="_23 != null and _23 != ''">AND _23 LIKE CONCAT('%',#{_23},'%')</if>
+      <if test="_24 != null and _24 != ''">AND _24 LIKE CONCAT('%',#{_24},'%')</if>
+    </where>
+  </select>
+  <select id="recently" parameterType="map" resultMap="TDeviceOnlineMap">SELECT <include refid="columns"/> FROM t_device_online
+  	<where>
+    	<if test="apMac != null and apMac != ''">AND AP_MAC = #{apMac} AND</if>
+      	DATE_SUB(#{lastDay}, INTERVAL #{length} DAY) &lt;=RECORD_DATE 
+  	</where>
+  </select>
+  
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="TDeviceOnlineMap">SELECT <include refid="columns"/> FROM t_device_online
+    <where>
+      <if test="id != null and id != ''">ID LIKE CONCAT('%',#{id},'%')</if>
+      <if test="apMac != null and apMac != ''">AND AP_MAC LIKE CONCAT('%',#{apMac},'%')</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE LIKE CONCAT('%',#{recordDate},'%')</if>
+      <if test="_1 != null and _1 != ''">AND _1 LIKE CONCAT('%',#{_1},'%')</if>
+      <if test="_2 != null and _2 != ''">AND _2 LIKE CONCAT('%',#{_2},'%')</if>
+      <if test="_3 != null and _3 != ''">AND _3 LIKE CONCAT('%',#{_3},'%')</if>
+      <if test="_4 != null and _4 != ''">AND _4 LIKE CONCAT('%',#{_4},'%')</if>
+      <if test="_5 != null and _5 != ''">AND _5 LIKE CONCAT('%',#{_5},'%')</if>
+      <if test="_6 != null and _6 != ''">AND _6 LIKE CONCAT('%',#{_6},'%')</if>
+      <if test="_7 != null and _7 != ''">AND _7 LIKE CONCAT('%',#{_7},'%')</if>
+      <if test="_8 != null and _8 != ''">AND _8 LIKE CONCAT('%',#{_8},'%')</if>
+      <if test="_9 != null and _9 != ''">AND _9 LIKE CONCAT('%',#{_9},'%')</if>
+      <if test="_10 != null and _10 != ''">AND _10 LIKE CONCAT('%',#{_10},'%')</if>
+      <if test="_11 != null and _11 != ''">AND _11 LIKE CONCAT('%',#{_11},'%')</if>
+      <if test="_12 != null and _12 != ''">AND _12 LIKE CONCAT('%',#{_12},'%')</if>
+      <if test="_13 != null and _13 != ''">AND _13 LIKE CONCAT('%',#{_13},'%')</if>
+      <if test="_14 != null and _14 != ''">AND _14 LIKE CONCAT('%',#{_14},'%')</if>
+      <if test="_15 != null and _15 != ''">AND _15 LIKE CONCAT('%',#{_15},'%')</if>
+      <if test="_16 != null and _16 != ''">AND _16 LIKE CONCAT('%',#{_16},'%')</if>
+      <if test="_17 != null and _17 != ''">AND _17 LIKE CONCAT('%',#{_17},'%')</if>
+      <if test="_18 != null and _18 != ''">AND _18 LIKE CONCAT('%',#{_18},'%')</if>
+      <if test="_19 != null and _19 != ''">AND _19 LIKE CONCAT('%',#{_19},'%')</if>
+      <if test="_20 != null and _20 != ''">AND _20 LIKE CONCAT('%',#{_20},'%')</if>
+      <if test="_21 != null and _21 != ''">AND _21 LIKE CONCAT('%',#{_21},'%')</if>
+      <if test="_22 != null and _22 != ''">AND _22 LIKE CONCAT('%',#{_22},'%')</if>
+      <if test="_23 != null and _23 != ''">AND _23 LIKE CONCAT('%',#{_23},'%')</if>
+      <if test="_24 != null and _24 != ''">AND _24 LIKE CONCAT('%',#{_24},'%')</if>
+    </where>
+  </select>
+  <!--结果映射-->
+  <resultMap type="com.neo.admin.system.modular.deviceMonitor.domain.TDeviceOnline" id="TDeviceOnlineMap">
+    <result column="ID" property="id"/>
+    <result column="AP_MAC" property="apMac"/>
+    <result column="RECORD_DATE" property="recordDate"/>
+    <result column="_1" property="_1"/>
+    <result column="_2" property="_2"/>
+    <result column="_3" property="_3"/>
+    <result column="_4" property="_4"/>
+    <result column="_5" property="_5"/>
+    <result column="_6" property="_6"/>
+    <result column="_7" property="_7"/>
+    <result column="_8" property="_8"/>
+    <result column="_9" property="_9"/>
+    <result column="_10" property="_10"/>
+    <result column="_11" property="_11"/>
+    <result column="_12" property="_12"/>
+    <result column="_13" property="_13"/>
+    <result column="_14" property="_14"/>
+    <result column="_15" property="_15"/>
+    <result column="_16" property="_16"/>
+    <result column="_17" property="_17"/>
+    <result column="_18" property="_18"/>
+    <result column="_19" property="_19"/>
+    <result column="_20" property="_20"/>
+    <result column="_21" property="_21"/>
+    <result column="_22" property="_22"/>
+    <result column="_23" property="_23"/>
+    <result column="_24" property="_24"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,AP_MAC,RECORD_DATE,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24</sql>
+</mapper>

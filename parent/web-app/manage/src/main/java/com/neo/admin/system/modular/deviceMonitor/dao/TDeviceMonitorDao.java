@@ -20,6 +20,13 @@ public interface TDeviceMonitorDao {
 	 */
 	List<TDeviceMonitor> searchByPage(Map<String,Object> searchParams);
 	int total(Map<String,Object> searchParams);
+	
+	/**
+	 * 查询近几天的数据
+	 * @param searchParams lastDay 最后日期  length 需要查询的天数
+	 * @return
+	 */
+	List<TDeviceMonitor> recently(Map<String,Object> searchParams);
 	/**
 	 * 按条件查询记录
 	 * @param searchParams 条件
