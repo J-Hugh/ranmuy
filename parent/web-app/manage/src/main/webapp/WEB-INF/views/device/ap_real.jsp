@@ -157,8 +157,8 @@
 										<input name="par[apmac]" type="text" placeholder="设备MAC" class="form-control">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail2" class="sr-only">MAC</label> 
-										<input id="data_1" name="par[date]" value="2016-12-24" type="text" placeholder="日期，默认为查询当日" class="form-control">
+										<label class="sr-only">MAC</label>
+										<input id="data_2" name="par[date]" value="2016-12-24" type="text" placeholder="日期，默认为查询当日" class="form-control">
 									</div>
 	                                <button id="btn-search-chart" class="btn btn-sm btn-primary"
 										type="button" style="margin-bottom: 0px;">&nbsp;查询&nbsp;</button>

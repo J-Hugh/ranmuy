@@ -134,7 +134,6 @@ $.extend({
 
 function switchPage($outpage,$inpage){
 	$outpage.addClass('pt-page-current');
-
 	var isAnimating=false,
 		endCurrPage = false,
 		endNextPage = false,
