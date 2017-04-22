@@ -1,7 +1,6 @@
 package com.neo.analysis;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,7 +43,6 @@ public class CMBC extends SmsBase implements ISms {
                 this.setAmount(new BigDecimal(m.group(4)));
                 this.setBalance(new BigDecimal((null == m.group(6) || "".equals(m.group(6))) ? "0" : m.group(6)));
             }else{
-
             }
         } catch (Exception e) {
             e.printStackTrace();

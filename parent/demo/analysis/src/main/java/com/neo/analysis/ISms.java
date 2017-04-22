@@ -3,6 +3,7 @@ package com.neo.analysis;
 import java.math.BigDecimal;
 
 /**
+ * 短信解析接口
  * Created by neoThe on 2017/4/11.
  */
 public interface ISms {
