@@ -28,19 +28,15 @@ public class WechatController extends BaseController {
 
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
     @ResponseBody
-    public ActResult<?> Refresh() {
-
-        WechatRecord record = new WechatRecord();
-        record.setToName("小明");
-        record.setFromName("小红");
-        record.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        record.setRecordDate(new Timestamp(System.currentTimeMillis()));
+    public ActResult<WechatRecord> Refresh(WechatRecord record) {
+        ActResult<WechatRecord> ret = new ActResult<>();
         try {
             wechatRecordService.save(record);
+            ret.setDataSet(record);
         } catch (Exception e) {
+            ret.setFail("异常："+e.getMessage());
             e.printStackTrace();
         }
-        ActResult<?> ret = new ActResult<>();
         return ret;
     }
 }

@@ -5,6 +5,7 @@ import com.neo.espionage.modular.wechatRecord.domain.WechatRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,7 @@ public class WechatRecordService {
 	 * @param wechatRecord
 	 */
 	public void save(WechatRecord wechatRecord) throws Exception {
+		wechatRecord.setCreateDate(new Timestamp(System.currentTimeMillis()));
 		wechatRecordDao.save(wechatRecord);
 	}
 
