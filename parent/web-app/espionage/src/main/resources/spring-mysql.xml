@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd" >
+
+	<description>服务器数据源配置 </description>
+
+	<context:component-scan base-package="com.neo.espionage" />
+
+     <!-- MyBatis配置 3-->
+	 <bean id="localsqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="localDataSource" /> 
+      	<!-- 自动扫描domain目录, 配置包的基路径即可，多个包用;分割 -->
+		<property name="typeAliasesPackage" value="com.neo.espionage.modular" />
+		<!-- 显式指定Mapper文件位置 -->	
+		<property name="mapperLocations" value="classpath*:**/*Mapper.xml" />
+     </bean>
+	
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+		<property name="sqlSessionFactoryBeanName" value="localsqlSessionFactory" />
+		<property name="basePackage" value="com.neo.espionage.modular.*.dao" />
+	</bean>
+	
+	<!-- 注解式声明事务 -->
+	<bean id="localTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="localDataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="localTransactionManager" />
+
+     <context:property-placeholder location="classpath:properties/jdbc.properties" ignore-unresolvable="true"/>
+     <!-- production环境 -->
+     <beans profile="production" >
+		<!-- 数据源配置, 使用c3p0连接池 -->
+		<bean id="localDataSource"  destroy-method="close"  class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+          <property name="driverClass" value="${jdbc.local.driver}"/>
+          <property name="jdbcUrl" value="${jdbc.local.url}"/>
+          <!-- 数据库用户名 -->
+          <property name="user" value="${jdbc.local.username}"/>
+          <!-- 数据库用户密码 -->
+          <property name="password" value="${jdbc.local.password}"/>
+          <!--连接池中保留的最大连接数。默认值: 15 -->
+          <property name="maxPoolSize" value="3"/>
+          <!-- 连接池中保留的最小连接数，默认为：3-->
+          <property name="minPoolSize" value="1"/>  
+          <!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3-->  
+          <property name="initialPoolSize" value="2"/>
+          <!--最大空闲时间，60秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->   
+          <property name="maxIdleTime" value="30" />  
+          <!-- 当连接池连接耗尽时，客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException，如设为0则无限期等待。单位毫秒。默认: 0 -->   
+          <property name="checkoutTimeout" value="5000"/>
+          <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->   
+          <property name="acquireIncrement" value="2"/>  
+		  <!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次-->   
+          <property name="acquireRetryAttempts" value="0"/>  
+          <!--重新尝试的时间间隔，默认为：1000毫秒-->   
+          <property name="acquireRetryDelay" value="1000" />  
+          <!--关闭连接时，是否提交未提交的事务，默认为false，即关闭连接，回滚未提交的事务 -->   
+          <property name="autoCommitOnClose" value="false"/>  
+          <!--如果为false，则获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常，但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。默认: false-->   
+          <property name="breakAfterAcquireFailure" value="false"/>  
+          <!--每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->   
+          <property name="idleConnectionTestPeriod"  value="60"/>  
+          <!--c3p0全局的PreparedStatements缓存的大小。如果maxStatements与maxStatementsPerConnection均为0，则缓存不生效，只要有一个不为0，则语句的缓存就能生效。如果默认值: 0-->   
+          <property name="maxStatements" value="100" />  
+		</bean>
+	</beans>
+</beans>

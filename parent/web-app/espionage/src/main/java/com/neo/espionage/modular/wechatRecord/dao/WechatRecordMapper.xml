@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neo.espionage.modular.wechatRecord.dao.WechatRecordDao">
+  <!--查询一条记录-->
+  <select id="findById" resultMap="WechatRecordMap">SELECT <include refid="columns"/> FROM wechat_record WHERE ID=#{id}</select>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="WechatRecordMap">SELECT <include refid="columns"/> FROM wechat_record</select>
+  <!--按条件查询-->
+  <select id="search" parameterType="map" resultMap="WechatRecordMap">SELECT <include refid="columns"/> FROM wechat_record
+    <where>
+      <if test="id != null and id != ''">ID = #{id}</if>
+      <if test="fromName != null and fromName != ''">AND FROM_NAME = #{fromName}</if>
+      <if test="toName != null and toName != ''">AND TO_NAME = #{toName}</if>
+      <if test="content != null and content != ''">AND CONTENT = #{content}</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE = #{recordDate}</if>
+      <if test="createDate != null and createDate != ''">AND CREATE_DATE = #{createDate}</if>
+    </where>
+  </select>
+  <!--分页查询-->
+  <select id="searchByPage" parameterType="map" resultMap="WechatRecordMap">SELECT <include refid="columns"/> FROM wechat_record
+    <where>
+      <if test="id != null and id != ''">ID = #{id}</if>
+      <if test="fromName != null and fromName != ''">AND FROM_NAME = #{fromName}</if>
+      <if test="toName != null and toName != ''">AND TO_NAME = #{toName}</if>
+      <if test="content != null and content != ''">AND CONTENT = #{content}</if>
+      <if test="recordDate != null and recordDate != ''">AND RECORD_DATE = #{recordDate}</if>
+      <if test="createDate != null and createDate != ''">AND CREATE_DATE = #{createDate}</if>
+    </where>
+  </select>
+  <!--插入记录-->
+  <insert id="save" parameterType="WechatRecord">INSERT INTO wechat_record (<include refid="columns"/>) VALUES (#{id},#{fromName},#{toName},#{content},#{recordDate},#{createDate})</insert>
+  <!--删除记录-->
+  <delete id="delete">DELETE FROM wechat_record WHERE ID=#{id}</delete>
+  <!--修改记录-->
+  <update id="update" parameterType="WechatRecord">UPDATE wechat_record
+    <set>
+      <if test="fromName != null">FROM_NAME = #{fromName}, </if>
+      <if test="toName != null">TO_NAME = #{toName}, </if>
+      <if test="content != null">CONTENT = #{content}, </if>
+      <if test="recordDate != null">RECORD_DATE = #{recordDate}, </if>
+      <if test="createDate != null">CREATE_DATE = #{createDate}, </if>
+    </set>WHERE ID=#{id}
+  </update>
+  <!--结果映射-->
+  <resultMap type="WechatRecord" id="WechatRecordMap">
+    <result column="ID" property="id"/>
+    <result column="FROM_NAME" property="fromName"/>
+    <result column="TO_NAME" property="toName"/>
+    <result column="CONTENT" property="content"/>
+    <result column="RECORD_DATE" property="recordDate"/>
+    <result column="CREATE_DATE" property="createDate"/>
+  </resultMap>
+  <!--查询字段-->
+  <sql id="columns">ID,FROM_NAME,TO_NAME,CONTENT,RECORD_DATE,CREATE_DATE</sql>
+</mapper>
