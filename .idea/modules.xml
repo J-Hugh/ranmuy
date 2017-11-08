@@ -3,8 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/parent/demo/analysis/analysis.iml" filepath="$PROJECT_DIR$/parent/demo/analysis/analysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/data-analysis/data-analysis.iml" filepath="$PROJECT_DIR$/parent/data-analysis/data-analysis.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent/demo/demo.iml" filepath="$PROJECT_DIR$/parent/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/web-app/espionage/espionage.iml" filepath="$PROJECT_DIR$/parent/web-app/espionage/espionage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/data-analysis/hp-mapreduce/hp-mapreduce.iml" filepath="$PROJECT_DIR$/parent/data-analysis/hp-mapreduce/hp-mapreduce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/data-analysis/hp-spark/hp-spark.iml" filepath="$PROJECT_DIR$/parent/data-analysis/hp-spark/hp-spark.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent/web-app/manage/manage.iml" filepath="$PROJECT_DIR$/parent/web-app/manage/manage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/move-app/move-app.iml" filepath="$PROJECT_DIR$/parent/move-app/move-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/neo-utils/neo-utils.iml" filepath="$PROJECT_DIR$/parent/neo-utils/neo-utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent/parent.iml" filepath="$PROJECT_DIR$/parent/parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/ranmuy.iml" filepath="$PROJECT_DIR$/ranmuy.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent/web-app/web-app.iml" filepath="$PROJECT_DIR$/parent/web-app/web-app.iml" />

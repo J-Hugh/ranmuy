@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <resourceExtensions />
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Annotation profile for manage" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="manage" />
+      </profile>
+      <profile default="false" name="Annotation profile for analysis" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="analysis" />
+      </profile>
+      <profile default="false" name="Annotation profile for move-app" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="move-app" />
+      </profile>
+      <profile default="false" name="Annotation profile for hp-mapreduce" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="hp-mapreduce" />
+      </profile>
+      <profile default="false" name="Annotation profile for hp-spark" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="hp-spark" />
+      </profile>
+      <profile default="false" name="Annotation profile for espionage" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="espionage" />
+      </profile>
+      <profile default="false" name="Annotation profile for neo-utils" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="analysis" target="1.7" />
+      <module name="data-analysis" target="1.7" />
+      <module name="demo" target="1.7" />
+      <module name="espionage" target="1.7" />
+      <module name="hp-mapreduce" target="1.7" />
+      <module name="hp-spark" target="1.7" />
       <module name="manage" target="1.7" />
+      <module name="move-app" target="1.7" />
+      <module name="neo-utils" target="1.7" />
       <module name="parent" target="1.7" />
       <module name="web-app" target="1.7" />
     </bytecodeTargetLevel>

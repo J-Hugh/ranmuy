@@ -12,8 +12,8 @@
         <module>web-app</module>
         <module>demo</module>
         <module>move-app</module>
-        <module>dataanalysis</module>
         <module>data-analysis</module>
+        <module>neo-utils</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

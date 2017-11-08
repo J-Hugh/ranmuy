@@ -61,13 +61,13 @@
 	
 	
 	<!-- 对JDBC配置进行解密  --> 
-  	<bean id="propertyConfigurer" class="com.neo.admin.common.tools.EncryptablePropertyPlaceholderConfigurer">  
-	    <property name="locations">
-	        <list>
-	            <value>classpath*:/properties/jdbc.properties</value>
-	        </list>
-	    </property>
-    </bean>
+  	<!--<bean id="propertyConfigurer" class="com.neo.admin.common.tools.EncryptablePropertyPlaceholderConfigurer">  -->
+	    <!--<property name="locations">-->
+	        <!--<list>-->
+	            <!--<value>classpath*:/properties/jdbc.properties</value>-->
+	        <!--</list>-->
+	    <!--</property>-->
+    <!--</bean>-->
 	<!-- production环境 -->
  	<beans profile="production" >
 		<!-- 数据源配置, 使用c3p0连接池 -->
