@@ -19,9 +19,9 @@ public class LbsController extends BaseController {
 
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
     @ResponseBody
-    public ActResult<?> Refresh(BaseSearch search) {
+    public ActResult<?> Refresh(String mac,double lng,double lat) {
         ActResult<?> ret = new ActResult<>();
-
+        System.out.println(mac + "_" + lng +"_" + lat);
         return ret;
     }
 }
